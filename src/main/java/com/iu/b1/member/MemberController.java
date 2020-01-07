@@ -54,16 +54,41 @@ public class MemberController {
 
 	// valid 검증 후 그 뒤에 바로 bindingResult 써줘야함(순서 중요)
 	
+	/*
+	 * @PostMapping("memberJoin") public ModelAndView memberJoin(@Valid MemberVO
+	 * memberVO, BindingResult bindingResult, MultipartFile file) throws Exception {
+	 * ModelAndView mv = new ModelAndView();
+	 * 
+	 * memberVO = memberService.memberJoin(memberVO, file);
+	 * 
+	 * 
+	 * return mv;
+	 * 
+	 * }
+	 */
+	 
 	@PostMapping("memberJoin")
-	public ModelAndView memberJoin(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile file)
-			throws Exception {
+	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile file) throws Exception {
 		ModelAndView mv = new ModelAndView();
-
-			memberVO = memberService.memberJoin(memberVO, file);
+		String msg = "가입실패";
+		String path = "../";
+		
+		if(!memberService.idCheck(memberVO)) {
+			memberVO = memberService.memberJoin(memberVO);	
+			msg = "가입성공";
+			
+		}
+		
+		mv.setViewName("common/result");
+		mv.addObject("msg", msg);
+		mv.addObject("path", path);
+		
 		return mv;
 
 	}
 	 
+	
+	
 	 
 
 	@GetMapping("memberLogin")
