@@ -17,7 +17,7 @@
 	<h1>Name: ${member.name}</h1>
 	<h1>Email: ${member.email}</h1>
 	<h1>Photo</h1>
-	<img alt="" src="../upload/${ar.memberFilesVO.fname}">
+	<img alt="" src="../upload/${file.fname}" style="width: 200px;">
 	
 	
 </div>

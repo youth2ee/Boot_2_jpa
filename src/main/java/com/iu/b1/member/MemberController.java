@@ -68,15 +68,17 @@ public class MemberController {
 	 */
 	 
 	@PostMapping("memberJoin")
-	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile file) throws Exception {
+	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile files) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		String msg = "가입실패";
 		String path = "../";
 		
 		if(!memberService.idCheck(memberVO)) {
-			memberVO = memberService.memberJoin(memberVO);	
-			msg = "가입성공";
+			Boolean check = memberService.memberJoin(memberVO, files);	
 			
+			if(check) {
+				msg = "가입성공";				
+			}
 		}
 		
 		mv.setViewName("common/result");
@@ -101,15 +103,15 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		List<MemberVO> ar = memberService.memberLogin(memberVO);
 
-		String message = "Login Fail";
+		String msg = "Login Fail";
+		
 		if (ar.size() != 0) {
-			message = "Login Success";
+			msg = "Login Success";
 			session.setAttribute("member", ar.get(0));
-		} else {
+			session.setAttribute("file", memberService.memberFileSelect(memberVO));
+		} 
 
-		}
-
-		mv.addObject("message", message);
+		mv.addObject("msg", msg);
 		mv.addObject("path", "../");
 		mv.setViewName("common/result");
 

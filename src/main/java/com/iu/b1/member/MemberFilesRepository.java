@@ -9,7 +9,7 @@ public interface MemberFilesRepository extends JpaRepository<MemberFilesVO, Inte
 	/* MemberFilesVO findById(String id); */
 	  
 	  public List<MemberFilesVO> findById(String id)throws Exception;
-	  
+	  public Boolean existsById(String id) throws Exception;
 
 	
 
